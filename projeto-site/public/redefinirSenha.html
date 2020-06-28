@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="PT">
 
 <head>
 
@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Login</title>
+  <title>Redefinir senha</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,40 +34,42 @@
             <!-- Nested Row within Card Body -->
             <div class="row">
               <div class="col-lg-6 d-none d-lg-block" >
-                <img src="./img/login3.png" style="width: 450px; margin-top: 60px; " alt="">
+                <img src="./img/imgLogin2.png" style="width: 450px; margin-top: 60px; " alt="">
               </div>
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4"><img src="./img/ManchaDoLogo.png" style="width: 50px;" alt=""> BEM VINDO!</h1>
+                    <h1 class="h4 text-gray-900 mb-4"><img src="./img/ManchaDoLogo.png" style="width: 50px;" alt=""> REDEFINIR SENHA!</h1>
                   </div>
                   
                     <form id="form_login" method="post" onsubmit="return entrar()">
                   
                     <div class="form-group">
-                      <input type="email" name="emailAdmin" class="form-control form-control-user" id="emailUser" aria-describedby="emailHelp" placeholder="Insira seu e-mail ou ID">
+                        <P class="alien">Email:</P>
+                      <input type="email" name="emailAdmin" class="form-control form-control-user" id="emailUser" aria-describedby="emailHelp" >
                     </div>
                     <div class="form-group">
-                      <input type="password" name="senhaAdmin" class="form-control form-control-user" id="senhaUser" placeholder="Insira sua senha">
+                        <P class="alien">Senha:</P>
+                      <input type="password" name="senhaAdmin" class="form-control form-control-user" id="senhaUser" >
                     </div>
+                    <div class="form-group">
+                        <P class="alien">Confirmar senha:</P>
+                        <input type="password" name="senhaAdminL" class="form-control form-control-user" id="senhaUser" >
+                      </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                        <input type="checkbox" class="custom-control-input" id="customCheck">  
                       </div>
                     </div>
                     <button type="submit"  class="btn btn-primary btn-user btn-block">
-                      Login
+                      Redefinir
                     </button>
                     
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="redefinirSenha.html">Esqueceu a senha?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.html">Criar uma conta?</a>
-                  </div>
+                    <a class="small" href="forgot-password.html">Cancelar</a>
+
                 </div>
               </div>
             </div>
@@ -83,7 +85,7 @@
   <script>
    function entrar() {
         var formulario = new URLSearchParams(new FormData(form_login));
-        fetch("/administrador/autenticar", { // aqui você muda a rota para a rota que você precisa
+        fetch("/administrador/trocarsenha", { // aqui você muda a rota para a rota que você precisa
             method: "POST",
             body: formulario
         }).then(resposta => {
@@ -95,12 +97,13 @@
                     sessionStorage.login_usuario_meuapp = json.login;
                     sessionStorage.nome_usuario_meuapp = json.nome;
 
-                    window.location.href = '/index.html'; // aqui você coloca a página que é para ir 
+                   // window.location.href = '/index.html'; // aqui você coloca a página que é para ir 
+                   alert("Senha redefinida com sucesso!!");
                 });
 
             } else {
 
-                console.log('Erro de login!');
+                console.log('Erro ao alterar senha!');
 
                 response.text().then(texto => {
                     console.error(texto);
@@ -114,6 +117,42 @@
 
       
   </script>
+
+<script>
+    function entrar() {
+         var formulario = new URLSearchParams(new FormData(form_login));
+         fetch("/funcionario/trocarsenha", { // aqui você muda a rota para a rota que você precisa
+             method: "POST",
+             body: formulario
+         }).then(resposta => {
+ 
+             if (resposta.ok) {
+ 
+                 resposta.json().then(json => {
+ 
+                     sessionStorage.login_usuario_meuapp = json.login;
+                     sessionStorage.nome_usuario_meuapp = json.nome;
+ 
+                    // window.location.href = '/index.html'; // aqui você coloca a página que é para ir 
+                    alert("Senha redefinida com sucesso!!");
+                 });
+ 
+             } else {
+ 
+                 console.log('Erro ao alterar senha!');
+ 
+                 response.text().then(texto => {
+                     console.error(texto);
+                 });
+             }
+         });
+ 
+         return false;
+     }
+ 
+ 
+       
+   </script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
